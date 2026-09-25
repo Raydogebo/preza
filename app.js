@@ -18,8 +18,8 @@ function toggleMenu(open) {
 function show(index) {
   current = Math.max(0, Math.min(slides.length - 1, index));
   slides.forEach((slide, i) => { slide.hidden = i !== current; });
-  document.body.classList.toggle('dark', current === 0 || current === 8);
-  document.querySelector('#counter').textContent = `${String(current + 1).padStart(2, '0')} / 09`;
+  document.body.classList.toggle('dark', slides[current].classList.contains('cover') || slides[current].classList.contains('closing'));
+  document.querySelector('#counter').textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
   document.querySelector('#progress').style.width = `${(current + 1) / slides.length * 100}%`;
   document.querySelector('#prev').disabled = current === 0;
   document.querySelector('#next').disabled = current === slides.length - 1;
@@ -27,7 +27,7 @@ function show(index) {
     if (i === current) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
-  document.title = `${slides[current].dataset.title} — Контур`;
+  document.title = `${slides[current].dataset.title} — InsuranceCheck`;
   window.scrollTo(0, 0);
 }
 function go(index) { location.hash = String(Math.max(0, Math.min(slides.length - 1, index)) + 1); }
